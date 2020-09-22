@@ -1,26 +1,23 @@
 package org.openchat;
 
 import com.eclipsesource.json.JsonObject;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.openchat.api.UserAPI;
 import org.openchat.api.UserService;
 import org.openchat.domain.users.RegistrationData;
 import org.openchat.domain.users.User;
+import org.openchat.infrastructure.builders.UserBuilder;
 import spark.Request;
 import spark.Response;
 
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.hamcrest.CoreMatchers.isA;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -33,7 +30,11 @@ public class UserAPIShould {
     private static final String PASSWORD = "ffgggh";
     private static final String ABOUT = "About Alice";
     private static final RegistrationData REGISTRATION_DATA = new RegistrationData(USERNAME, PASSWORD, ABOUT);
-    private static final User USER = new User(USER_ID, USERNAME, PASSWORD, ABOUT);
+    private static final User USER = UserBuilder.aUser()
+            .withId(USER_ID)
+            .withUsername(USERNAME)
+            .withPassword(PASSWORD)
+            .withAbout(ABOUT).build();
 
     @Mock
     Request request;
