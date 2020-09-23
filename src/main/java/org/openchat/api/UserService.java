@@ -13,12 +13,12 @@ public class UserService {
     }
 
     public User createUser(RegistrationData registrationData) throws UserNameAlreadyExistingException {
-        User user = mapRegistrationDataToUser(registrationData);
+        User user = createUserFrom(registrationData);
         userRepository.add(user);
         return user;
     }
 
-    private User mapRegistrationDataToUser(RegistrationData registrationData) {
+    private User createUserFrom(RegistrationData registrationData) {
         User user = new User(
                 idGenerator.next(),
                 registrationData.username(),
