@@ -2,7 +2,9 @@ package org.openchat.api;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.openchat.domain.users.*;
 
 import java.util.UUID;
@@ -12,6 +14,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.openchat.infrastructure.builders.UserBuilder.aUser;
 
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceShould {
 
     private static final String USER_ID = UUID.randomUUID().toString();
@@ -36,13 +39,11 @@ public class UserServiceShould {
 
     @Test
     public void create_a_user() throws UserNameAlreadyExistingException {
-        assertThat(true);
+        given(idGenerator.next()).willReturn(USER_ID);
 
-        //        given(idGenerator.next()).willReturn(USER_ID);
-//
-//        User result = userService.createUser(REGISTRATION_DATA);
+        User result = userService.createUser(REGISTRATION_DATA);
 
-//        verify(userRepository).add(USER);
-//        assertThat(result).isEqualTo(USER);
+        verify(userRepository).add(USER);
+        assertThat(result).isEqualTo(USER);
     }
 }

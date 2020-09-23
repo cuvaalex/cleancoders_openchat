@@ -13,6 +13,17 @@ public class UserService {
     }
 
     public User createUser(RegistrationData registrationData) throws UserNameAlreadyExistingException {
-        throw new UnsupportedOperationException();
+        User user = mapRegistrationDataToUser(registrationData);
+        userRepository.add(user);
+        return user;
+    }
+
+    private User mapRegistrationDataToUser(RegistrationData registrationData) {
+        User user = new User(
+                idGenerator.next(),
+                registrationData.username(),
+                registrationData.password(),
+                registrationData.about());
+        return user;
     }
 }
