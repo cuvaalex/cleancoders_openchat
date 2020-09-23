@@ -11,7 +11,6 @@ import org.openchat.api.UserAPI;
 import org.openchat.api.UserService;
 import org.openchat.domain.users.RegistrationData;
 import org.openchat.domain.users.User;
-import org.openchat.infrastructure.builders.UserBuilder;
 import spark.Request;
 import spark.Response;
 
@@ -66,11 +65,12 @@ public class UserAPIShould {
     create_a_new_user() {
 
         userAPI.createUser(request, response);
-        ArgumentCaptor<RegistrationData> captor = ArgumentCaptor.forClass(RegistrationData.class);
-        verify(userService).createUser(captor.capture());
-        assertThat(captor.getValue().getUsername()).isEqualTo(REGISTRATION_DATA.getUsername());
-        assertThat(captor.getValue().getPassword()).isEqualTo(REGISTRATION_DATA.getPassword());
-        assertThat(captor.getValue().getAbout()).isEqualTo(REGISTRATION_DATA.getAbout());
+        verify(userService).createUser(REGISTRATION_DATA);
+//        ArgumentCaptor<RegistrationData> captor = ArgumentCaptor.forClass(RegistrationData.class);
+//        verify(userService).createUser(captor.capture());
+//        assertThat(captor.getValue().username()).isEqualTo(REGISTRATION_DATA.username());
+//        assertThat(captor.getValue().password()).isEqualTo(REGISTRATION_DATA.password());
+//        assertThat(captor.getValue().about()).isEqualTo(REGISTRATION_DATA.about());
     }
 
     private String JsonContaining(User user) {
@@ -83,9 +83,9 @@ public class UserAPIShould {
 
     private String JsonContaining(RegistrationData registrationData) {
         return new JsonObject()
-                .add("username", registrationData.getUsername())
-                .add("password", registrationData.getPassword())
-                .add("about", registrationData.getAbout())
+                .add("username", registrationData.username())
+                .add("password", registrationData.password())
+                .add("about", registrationData.about())
                 .toString();
     }
 }
