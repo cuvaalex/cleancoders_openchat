@@ -47,7 +47,7 @@ public class UserAPIShould {
     private UserAPI userAPI;
 
     @Before
-    public void before() {
+    public void before() throws UserNameAlreadyExistingException {
         userAPI = new UserAPI(userService);
         given(request.body()).willReturn(JsonContaining(REGISTRATION_DATA));
         given(userService.createUser(REGISTRATION_DATA)).willReturn(USER);
@@ -64,22 +64,22 @@ public class UserAPIShould {
     }
 
     @Test public void
-    create_a_new_user() {
+    create_a_new_user() throws UserNameAlreadyExistingException {
 
         userAPI.createUser(request, response);
         verify(userService).createUser(REGISTRATION_DATA);
     }
 
-//    @Test
-//    public void
-//    return_an_error_when_creating_a_user_with_an_existing_username() {
-//        given(userService.createUser(REGISTRATION_DATA)).willThrow(UserNameAlreadyExistingException.class);
-//
-//        String result = userAPI.createUser(request, response);
-//
-//        verify(response).status(400);
-//        assertThat(result).isEqualTo("Username already in use.");
-//    }
+    @Test
+    public void
+    return_an_error_when_creating_a_user_with_an_existing_username() throws UserNameAlreadyExistingException {
+        given(userService.createUser(REGISTRATION_DATA)).willThrow(UserNameAlreadyExistingException.class);
+
+        String result = userAPI.createUser(request, response);
+
+        verify(response).status(400);
+        assertThat(result).isEqualTo("Username already in use.");
+    }
     private String JsonContaining(User user) {
         return new JsonObject()
                 .add("id", user.getUserId())
