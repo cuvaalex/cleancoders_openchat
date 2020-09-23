@@ -18,6 +18,7 @@ public class UserAPI {
 
     public String createUser(Request request, Response response) {
         RegistrationData registration = registrationFrom(request);
+
         User user = userService.createUser(registration);
         response.status(CREATED_201);
         response.type("application/json");

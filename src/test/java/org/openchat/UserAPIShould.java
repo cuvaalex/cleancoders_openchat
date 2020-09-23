@@ -11,6 +11,7 @@ import org.openchat.api.UserAPI;
 import org.openchat.api.UserService;
 import org.openchat.domain.users.RegistrationData;
 import org.openchat.domain.users.User;
+import org.openchat.domain.users.UserNameAlreadyExistingException;
 import spark.Request;
 import spark.Response;
 
@@ -49,11 +50,12 @@ public class UserAPIShould {
     public void before() {
         userAPI = new UserAPI(userService);
         given(request.body()).willReturn(JsonContaining(REGISTRATION_DATA));
-        given(userService.createUser(any(RegistrationData.class))).willReturn(USER);
+        given(userService.createUser(REGISTRATION_DATA)).willReturn(USER);
     }
 
     @Test
-    public void return_json_representing_newly_user() {
+    public void
+    return_json_representing_newly_user() {
         String result = userAPI.createUser(request, response);
 
         verify(response).type("application/json");
@@ -66,13 +68,18 @@ public class UserAPIShould {
 
         userAPI.createUser(request, response);
         verify(userService).createUser(REGISTRATION_DATA);
-//        ArgumentCaptor<RegistrationData> captor = ArgumentCaptor.forClass(RegistrationData.class);
-//        verify(userService).createUser(captor.capture());
-//        assertThat(captor.getValue().username()).isEqualTo(REGISTRATION_DATA.username());
-//        assertThat(captor.getValue().password()).isEqualTo(REGISTRATION_DATA.password());
-//        assertThat(captor.getValue().about()).isEqualTo(REGISTRATION_DATA.about());
     }
 
+//    @Test
+//    public void
+//    return_an_error_when_creating_a_user_with_an_existing_username() {
+//        given(userService.createUser(REGISTRATION_DATA)).willThrow(UserNameAlreadyExistingException.class);
+//
+//        String result = userAPI.createUser(request, response);
+//
+//        verify(response).status(400);
+//        assertThat(result).isEqualTo("Username already in use.");
+//    }
     private String JsonContaining(User user) {
         return new JsonObject()
                 .add("id", user.getUserId())
