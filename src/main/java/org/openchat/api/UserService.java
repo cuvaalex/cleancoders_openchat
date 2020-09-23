@@ -13,9 +13,16 @@ public class UserService {
     }
 
     public User createUser(RegistrationData registrationData) throws UserNameAlreadyExistingException {
+        validateUsername(registrationData.username());
         User user = createUserFrom(registrationData);
         userRepository.add(user);
         return user;
+    }
+
+    private void validateUsername(String username) throws UserNameAlreadyExistingException {
+        if(userRepository.isUsernameTaken(username)){
+            throw new UserNameAlreadyExistingException();
+        }
     }
 
     private User createUserFrom(RegistrationData registrationData) {

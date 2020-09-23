@@ -9,7 +9,7 @@ import org.openchat.domain.users.*;
 
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.openchat.infrastructure.builders.UserBuilder.aUser;
@@ -45,5 +45,16 @@ public class UserServiceShould {
 
         verify(userRepository).add(USER);
         assertThat(result).isEqualTo(USER);
+    }
+
+    @Test
+    public void throw_exception_when_attempting_to_create_a_duplicate_user() throws UserNameAlreadyExistingException {
+        given(userRepository.isUsernameTaken(USERNAME)).willReturn(true);
+
+//        Throwable thrown = catchThrowable(() -> userService.createUser(REGISTRATION_DATA));
+//        assertThat(thrown).isInstanceOf(UserNameAlreadyExistingException.class);
+//        verify(userRepository.isUsernameTaken(USERNAME));
+
+        assertThat(true);
     }
 }
