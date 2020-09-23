@@ -51,10 +51,7 @@ public class UserServiceShould {
     public void throw_exception_when_attempting_to_create_a_duplicate_user() throws UserNameAlreadyExistingException {
         given(userRepository.isUsernameTaken(USERNAME)).willReturn(true);
 
-//        Throwable thrown = catchThrowable(() -> userService.createUser(REGISTRATION_DATA));
-//        assertThat(thrown).isInstanceOf(UserNameAlreadyExistingException.class);
-//        verify(userRepository.isUsernameTaken(USERNAME));
-
-        assertThat(true);
+        Throwable thrown = catchThrowable(() -> userService.createUser(REGISTRATION_DATA));
+        assertThat(thrown).isInstanceOf(UserNameAlreadyExistingException.class);
     }
 }
