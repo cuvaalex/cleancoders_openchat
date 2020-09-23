@@ -6,6 +6,6 @@ public class UserRepository {
     }
 
     public boolean isUsernameTaken(String username) {
-        return false;
+        return true;
     }
 }
