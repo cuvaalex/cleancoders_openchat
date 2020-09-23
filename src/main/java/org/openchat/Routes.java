@@ -5,8 +5,7 @@ import org.openchat.api.UserService;
 import org.openchat.domain.users.IdGenerator;
 import org.openchat.domain.users.UserRepository;
 
-import static spark.Spark.get;
-import static spark.Spark.options;
+import static spark.Spark.*;
 
 public class Routes {
 
@@ -28,10 +27,10 @@ public class Routes {
 
     private void openchatRoutes() {
         get("status", (req, res) -> "OpenChat: OK!");
+        post("users", (req, res) -> userAPI.createUser(req, res));
     }
 
     private void swaggerRoutes() {
-        options("users", (req, res) -> "OK");
         options("login", (req, res) -> "OK");
         options("users/:userId/timeline", (req, res) -> "OK");
         options("followings", (req, res) -> "OK");
