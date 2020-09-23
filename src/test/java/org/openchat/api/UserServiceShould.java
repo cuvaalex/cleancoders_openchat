@@ -53,5 +53,6 @@ public class UserServiceShould {
 
         Throwable thrown = catchThrowable(() -> userService.createUser(REGISTRATION_DATA));
         assertThat(thrown).isInstanceOf(UserNameAlreadyExistingException.class);
+        verify(userRepository).isUsernameTaken(USERNAME);
     }
 }
