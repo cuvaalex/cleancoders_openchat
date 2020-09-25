@@ -13,7 +13,6 @@ public class UserRepository {
 
     public boolean isUsernameTaken(String username) {
         return users
-                .stream().filter(user -> user.getUsername().equalsIgnoreCase(username))
-                .count() > 0;
+                .stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
     }
 }
