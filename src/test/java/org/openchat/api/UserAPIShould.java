@@ -1,14 +1,11 @@
-package org.openchat;
+package org.openchat.api;
 
 import com.eclipsesource.json.JsonObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.openchat.api.UserAPI;
-import org.openchat.api.UserService;
 import org.openchat.domain.users.RegistrationData;
 import org.openchat.domain.users.User;
 import org.openchat.domain.users.UserNameAlreadyExistingException;
@@ -82,9 +79,9 @@ public class UserAPIShould {
     }
     private String JsonContaining(User user) {
         return new JsonObject()
-                .add("id", user.getUserId())
-                .add("username", user.getUsername())
-                .add("about", user.getAbout())
+                .add("id", user.id())
+                .add("username", user.username())
+                .add("about", user.about())
                 .toString();
     }
 
