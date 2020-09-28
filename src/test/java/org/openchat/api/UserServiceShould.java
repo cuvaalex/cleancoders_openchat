@@ -12,7 +12,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.openchat.infrastructure.builders.UserBuilder.aUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceShould {

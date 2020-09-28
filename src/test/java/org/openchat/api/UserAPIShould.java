@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.openchat.domain.users.RegistrationData;
 import org.openchat.domain.users.User;
 import org.openchat.domain.users.UserNameAlreadyExistingException;
+import org.openchat.domain.users.UserService;
 import spark.Request;
 import spark.Response;
 
@@ -79,7 +80,7 @@ public class UserAPIShould {
     }
     private String JsonContaining(User user) {
         return new JsonObject()
-                .add("id", user.id())
+                .add("id", user.userId())
                 .add("username", user.username())
                 .add("about", user.about())
                 .toString();

@@ -1,4 +1,4 @@
-package org.openchat.api;
+package org.openchat.domain.users;
 
 import org.openchat.domain.users.*;
 

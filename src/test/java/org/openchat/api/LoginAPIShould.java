@@ -60,7 +60,7 @@ public class LoginAPIShould {
 
     private String jsonContaining(User user) {
         return new JsonObject()
-                .add("id", USER.id())
+                .add("id", USER.userId())
                 .add("username", USER.username())
                 .add("about", USER.about())
                 .toString();

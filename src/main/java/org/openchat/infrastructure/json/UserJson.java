@@ -6,7 +6,7 @@ import org.openchat.domain.users.User;
 public class UserJson {
     public static String jsonFor(User user) {
         return new JsonObject()
-                .add("id", user.id())
+                .add("id", user.userId())
                 .add("username", user.username())
                 .add("about", user.about())
                 .toString();

@@ -1,9 +1,7 @@
 package org.openchat.domain.users;
 
-import java.util.Objects;
-
-import static org.apache.commons.lang3.builder.EqualsBuilder.reflectionEquals;
-import static org.apache.commons.lang3.builder.HashCodeBuilder.reflectionHashCode;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class User {
     private final String userId;
@@ -18,7 +16,7 @@ public class User {
         this.about = about;
     }
 
-    public String id() {
+    public String userId() {
         return userId;
     }
 
@@ -35,13 +33,21 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object other) {
-        return reflectionEquals(this, other);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return EqualsBuilder
+                .reflectionEquals(this, o);
     }
 
     @Override
     public int hashCode() {
-        return reflectionHashCode(this);
+        return HashCodeBuilder
+                .reflectionHashCode(this);
     }
-
 }
+

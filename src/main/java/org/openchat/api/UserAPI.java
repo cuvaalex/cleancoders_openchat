@@ -5,6 +5,7 @@ import com.eclipsesource.json.JsonObject;
 import org.openchat.domain.users.RegistrationData;
 import org.openchat.domain.users.User;
 import org.openchat.domain.users.UserNameAlreadyExistingException;
+import org.openchat.domain.users.UserService;
 import spark.Request;
 import spark.Response;
 
