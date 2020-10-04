@@ -2,11 +2,15 @@ package org.openchat.domain.post;
 
 import org.openchat.domain.users.IdGenerator;
 
+import java.util.List;
+
+import static org.openchat.infrastructure.builders.PostBuilder.aPost;
+
 public class PostService {
-    private LanguageService languageService;
-    private IdGenerator idGenerator;
-    private Clock clock;
-    private PostRepository postRepository;
+    private final LanguageService languageService;
+    private final IdGenerator idGenerator;
+    private final Clock clock;
+    private final PostRepository postRepository;
 
     public PostService(LanguageService languageService, IdGenerator idGenerator, Clock clock, PostRepository postRepository) {
         this.languageService = languageService;
@@ -18,30 +22,23 @@ public class PostService {
 
     public Post createPost(String userId, String postText) throws InapropriateLanguageException {
         validate(postText);
-        Post post = new Post(idGenerator.next(), userId, postText, clock.now());
+        Post post = aPost()
+                .setPostId(idGenerator.next())
+                .setUserId(userId)
+                .setText(postText)
+                .setDateTime(clock.now())
+                .build();
         postRepository.add(post);
         return post;
     }
 
     private void validate(String postText) throws InapropriateLanguageException {
-        if (languageService.isInapropriate(postText)){
+        if (languageService.isInappropriate(postText)){
             throw new InapropriateLanguageException();
         }
     }
 
-    public LanguageService languageService() {
-        return languageService;
-    }
-
-    public IdGenerator idGenerator() {
-        return idGenerator;
-    }
-
-    public Clock clock() {
-        return clock;
-    }
-
-    public PostRepository postRepository() {
-        return postRepository;
+    public List<Post> postBy(String userId) {
+        return postRepository.postBy(userId);
     }
 }
